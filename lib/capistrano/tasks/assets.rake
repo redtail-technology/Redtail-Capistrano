@@ -36,8 +36,7 @@ namespace :assets do
   task :auto_skip_precompile do
     revisions = []
     on roles :app do
-      invoke 'assets:pre_compile' and next if first_deploy?(current_path)
-      within current_path do
+      within release_path do
         revisions << capture(:cat, 'REVISION').strip
       end
     end
