@@ -8,8 +8,8 @@ namespace :unicorn do
 
   task :restart_workers do
     on roles(:all) do
-      invoke 'environment:set_web_site_location'
-      invoke 'unicorn:restart'
+      invoke! 'environment:set_web_site_location'
+      invoke! 'unicorn:restart'
     end
   end
 

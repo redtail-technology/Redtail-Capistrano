@@ -11,12 +11,12 @@ def handle_asset_precompile(revisions)
   if webpacker_assets_changed?(changed_files)
     puts '** Webpacker assets have changed since last deploy'
     puts '** Invoking asset precompile'
-    invoke 'assets:pre_compile'
+    invoke! 'assets:pre_compile'
   elsif assets_changed?(changed_files)
     puts '** Assets have changed since last deploy'
     puts '** Invoking asset precompile without webpacker'
     set :webpacker_precompile, false
-    invoke 'assets:pre_compile'
+    invoke! 'assets:pre_compile'
   else
     puts '** Assets have not changed since last deploy'
     puts '** Skipping asset precompile'
@@ -36,7 +36,7 @@ namespace :assets do
   task :auto_skip_precompile do
     revisions = []
     on roles :app do
-      invoke 'assets:pre_compile' and next if first_deploy?(current_path)
+      invoke! 'assets:pre_compile' and next if first_deploy?(current_path)
       within current_path do
         revisions << capture(:cat, 'REVISION').strip
       end
