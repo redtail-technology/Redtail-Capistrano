@@ -1,7 +1,6 @@
 namespace :unicorn do
   task :create_socket_folder do
     on roles(:all) do
-      # For some reason I cannot use relative paths here... even when using a within block...
       execute "if [ ! -e #{shared_path}/tmp/sockets ]; then mkdir #{shared_path}/tmp/sockets; fi"
     end
   end

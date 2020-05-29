@@ -2,7 +2,9 @@ namespace :task do
   task :tail, :file do |_task, args|
     if args[:file]
       on roles(:app) do
-        execute "tail -f #{shared_path}/log/#{args[:file]}.log"
+        within shared_path do
+          execute :tail, "-f log/#{args[:file]}.log"
+        end
       end
     else
       puts "** Please specify a logfile e.g: 'rake logs:tail[logfile]'"

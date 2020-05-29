@@ -1,11 +1,3 @@
-def first_deploy?(full_path)
-  !remote_folder_exists?(full_path)
-end
-
-def remote_folder_exists?(full_path)
-  capture("if [ -e #{full_path} ]; then echo 'true'; fi").strip == 'true'
-end
-
 def handle_asset_precompile(revisions)
   changed_files = `git diff --name-only #{revisions.first}`.split
   if webpacker_assets_changed?(changed_files)
@@ -32,11 +24,22 @@ def webpacker_assets_changed?(changed_files)
 end
 
 namespace :assets do
+  desc 'Clear appropriate precompile actions'
+  task :set_precompile_method do
+    on roles :app do
+      if capture("if [ -e #{current_path} ]; then echo 'true'; fi").strip == 'true'
+        Rake::Task['deploy:assets:precompile'].clear_actions
+      else
+        Rake::Task['assets:auto_skip_precompile'].clear_actions
+      end
+    end
+  end
+
   desc 'Automatically skip asset compile if possible'
   task :auto_skip_precompile do
     revisions = []
     on roles :app do
-      within release_path do
+      within current_path do
         revisions << capture(:cat, 'REVISION').strip
       end
     end
@@ -58,6 +61,8 @@ namespace :assets do
       end
     end
   end
+
+  before 'deploy:started', 'assets:set_precompile_method'
 
   before 'deploy:updated', 'assets:auto_skip_precompile'
 end
