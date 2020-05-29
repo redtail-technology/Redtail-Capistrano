@@ -26,10 +26,12 @@ end
 namespace :assets do
   desc 'Clear appropriate precompile actions'
   task :set_precompile_method do
-    if capture("if [ -e #{current_path} ]; then echo 'true'; fi").strip == 'true'
-      Rake::Task['deploy:assets:precompile'].clear_actions
-    else
-      Rake::Task['assets:auto_skip_precompile'].clear_actions
+    on roles :app do
+      if capture("if [ -e #{current_path} ]; then echo 'true'; fi").strip == 'true'
+        Rake::Task['deploy:assets:precompile'].clear_actions
+      else
+        Rake::Task['assets:auto_skip_precompile'].clear_actions
+      end
     end
   end
 
