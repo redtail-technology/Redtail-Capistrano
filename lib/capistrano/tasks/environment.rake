@@ -2,7 +2,9 @@ namespace :environment do
   desc 'Copy Redtail revision over as version'
   task :copy_redtail_revision do
     on roles(:app) do
-      execute "echo -n #{fetch(:redtail_revision)} > #{fetch(:release_path)}/config/version.txt"
+      within release_path do
+        execute :echo, "-n #{fetch(:redtail_revision)} > config/version.txt"
+      end
     end
   end
 
