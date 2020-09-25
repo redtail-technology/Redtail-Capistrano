@@ -1,5 +1,4 @@
 namespace :environment do
-  desc 'Copy Redtail revision over as version'
   task :copy_redtail_revision do
     on roles(:app) do
       within release_path do
@@ -8,7 +7,6 @@ namespace :environment do
     end
   end
 
-  desc 'Set web site location'
   task :set_web_site_location do
     on roles(:app) do
       execute "export WEB_SITE_LOCATION=#{fetch(:web_site_location)}"

@@ -24,7 +24,6 @@ def webpacker_assets_changed?(changed_files)
 end
 
 namespace :assets do
-  desc 'Clear appropriate precompile actions'
   task :set_precompile_method do
     on roles :app do
       if capture("if [ -e #{current_path} ]; then echo 'true'; fi").strip == 'true'
@@ -35,7 +34,6 @@ namespace :assets do
     end
   end
 
-  desc 'Automatically skip asset compile if possible'
   task :auto_skip_precompile do
     revisions = []
     on roles :app do
@@ -63,6 +61,5 @@ namespace :assets do
   end
 
   before 'deploy:started', 'assets:set_precompile_method'
-
   before 'deploy:updated', 'assets:auto_skip_precompile'
 end

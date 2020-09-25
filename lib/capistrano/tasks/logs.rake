@@ -1,4 +1,5 @@
 namespace :task do
+  desc 'Tail passed log file - usage rake logs:tail[logfile]'
   task :tail, :file do |_task, args|
     if args[:file]
       on roles(:app) do
