@@ -20,7 +20,7 @@ def assets_changed?(changed_files)
 end
 
 def webpacker_assets_changed?(changed_files)
-  changed_files.grep(%r(^(app/javascript|config/webpack))).any?
+  changed_files.grep(%r(^(app/javascript|config/webpack|package-lock\.json))).any?
 end
 
 namespace :assets do
