@@ -9,7 +9,7 @@ namespace :dotenv do
         else
           env_vars.each do |key, value|
             execute :sed,
-                    '-i -e', "s/.*#{key.upcase}.*/#{key.upcase}=#{value}/",
+                    '-i -e', "s/#{key.upcase}=.*/#{key.upcase}=#{value}/",
                     ".env.#{fetch(:rails_env)}"
           end
         end

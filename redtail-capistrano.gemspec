@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |gem|
   gem.name          = "redtail-capistrano"
-  gem.version       = '1.9.3'
+  gem.version       = '1.9.4'
   gem.authors       = ["Colin Rice"]
   gem.email         = ["colin.rice@redtailtechnology.com"]
   gem.description   = "Redtail specific Capistrano tasks"
