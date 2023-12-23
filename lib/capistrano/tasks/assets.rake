@@ -47,6 +47,10 @@ namespace :assets do
     handle_asset_precompile(revisions)
   end
 
+  task :symlink_masterkey do
+    set :linked_files, %w{config/master.key}
+  end
+
   task :pre_compile do
     on release_roles(fetch(:assets_roles)) do
       within release_path do
@@ -61,5 +65,6 @@ namespace :assets do
   end
 
   before 'deploy:started', 'assets:set_precompile_method'
+  before 'deploy:updated', 'assets:symlink_masterkey'
   before 'deploy:updated', 'assets:auto_skip_precompile'
 end
